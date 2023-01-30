@@ -3,6 +3,9 @@ let playerTwoTurn;
 let validMove;
 let moves = 0;
 let computerMove;
+let Player1;
+let Player2;
+let playerWin;
 const startGame = document.querySelector('#start');
 const restartGame = document.querySelector('#restart');
 
@@ -56,10 +59,10 @@ const Player = (name, symbol) => {
             validMove = false;
         }
     }
-    const checkWin = () =>{
+    const checkWin = () => {
         let winner;
 
-        if(gameArray[0] == symbol && gameArray[1] == symbol && gameArray[2] == symbol){
+        if (gameArray[0] == symbol && gameArray[1] == symbol && gameArray[2] == symbol) {
             winner = name;
             display.innerHTML = `${winner} wins!`;
             gameArray = ["", "", "", "", "", "", "", "", ""];
@@ -71,10 +74,10 @@ const Player = (name, symbol) => {
             changeBackground2.style.backgroundColor = 'rgb(233, 156, 156)'
             changeBackground3.style.backgroundColor = 'rgb(233, 156, 156)';
 
-            moves =0;
-            return true;
+            moves = 0;
+            playerWin = true;
         }
-        if(gameArray[3] == symbol && gameArray[4] == symbol && gameArray[5] == symbol){
+        if (gameArray[3] == symbol && gameArray[4] == symbol && gameArray[5] == symbol) {
             winner = name;
             display.innerHTML = `${winner} wins!`;
             gameArray = ["", "", "", "", "", "", "", "", ""];
@@ -86,10 +89,10 @@ const Player = (name, symbol) => {
             changeBackground2.style.backgroundColor = 'rgb(233, 156, 156)'
             changeBackground3.style.backgroundColor = 'rgb(233, 156, 156)';
 
-            moves =0;
-
+            moves = 0;
+            playerWin = true;
         }
-        if(gameArray[6] == symbol && gameArray[7] == symbol && gameArray[8] == symbol){
+        if (gameArray[6] == symbol && gameArray[7] == symbol && gameArray[8] == symbol) {
             winner = name;
             display.innerHTML = `${winner} wins!`;
             gameArray = ["", "", "", "", "", "", "", "", ""];
@@ -101,10 +104,10 @@ const Player = (name, symbol) => {
             changeBackground2.style.backgroundColor = 'rgb(233, 156, 156)'
             changeBackground3.style.backgroundColor = 'rgb(233, 156, 156)';
 
-            moves =0;
-
+            moves = 0;
+            playerWin = true;
         }
-        if(gameArray[0] == symbol && gameArray[3] == symbol && gameArray[6] == symbol){
+        if (gameArray[0] == symbol && gameArray[3] == symbol && gameArray[6] == symbol) {
             winner = name;
             display.innerHTML = `${winner} wins!`;
             gameArray = ["", "", "", "", "", "", "", "", ""];
@@ -116,10 +119,10 @@ const Player = (name, symbol) => {
             changeBackground2.style.backgroundColor = 'rgb(233, 156, 156)'
             changeBackground3.style.backgroundColor = 'rgb(233, 156, 156)';
 
-            moves =0;
-
+            moves = 0;
+            playerWin = true;
         }
-        if(gameArray[1] == symbol && gameArray[4] == symbol && gameArray[7] == symbol){
+        if (gameArray[1] == symbol && gameArray[4] == symbol && gameArray[7] == symbol) {
             winner = name;
             display.innerHTML = `${winner} wins!`;
             gameArray = ["", "", "", "", "", "", "", "", ""];
@@ -131,10 +134,10 @@ const Player = (name, symbol) => {
             changeBackground2.style.backgroundColor = 'rgb(233, 156, 156)'
             changeBackground3.style.backgroundColor = 'rgb(233, 156, 156)';
 
-            moves =0;
-
+            moves = 0;
+            playerWin = true;
         }
-        if(gameArray[2] == symbol && gameArray[5] == symbol && gameArray[8] == symbol){
+        if (gameArray[2] == symbol && gameArray[5] == symbol && gameArray[8] == symbol) {
             winner = name;
             display.innerHTML = `${winner} wins!`;
             gameArray = ["", "", "", "", "", "", "", "", ""];
@@ -146,10 +149,10 @@ const Player = (name, symbol) => {
             changeBackground2.style.backgroundColor = 'rgb(233, 156, 156)'
             changeBackground3.style.backgroundColor = 'rgb(233, 156, 156)';
 
-            moves =0;
-
+            moves = 0;
+            playerWin = true;
         }
-        if(gameArray[0] == symbol && gameArray[4] == symbol && gameArray[8] == symbol){
+        if (gameArray[0] == symbol && gameArray[4] == symbol && gameArray[8] == symbol) {
             winner = name;
             display.innerHTML = `${winner} wins!`;
             gameArray = ["", "", "", "", "", "", "", "", ""];
@@ -161,10 +164,10 @@ const Player = (name, symbol) => {
             changeBackground2.style.backgroundColor = 'rgb(233, 156, 156)'
             changeBackground3.style.backgroundColor = 'rgb(233, 156, 156)';
 
-            moves =0;
-
+            moves = 0;
+            playerWin = true;
         }
-        if(gameArray[6] == symbol && gameArray[4] == symbol && gameArray[2] == symbol){
+        if (gameArray[6] == symbol && gameArray[4] == symbol && gameArray[2] == symbol) {
             winner = name;
             display.innerHTML = `${winner} wins!`;
             gameArray = ["", "", "", "", "", "", "", "", ""];
@@ -176,13 +179,13 @@ const Player = (name, symbol) => {
             changeBackground2.style.backgroundColor = 'rgb(233, 156, 156)'
             changeBackground3.style.backgroundColor = 'rgb(233, 156, 156)';
 
-            moves =0;
-
+            moves = 0;
+            playerWin = true;
         }
     }
-    return { name, symbol, move,checkWin };
-};
-const GameBoard = (Player1, Player2) => {
+    return { name, symbol, move, checkWin };
+}
+const GameBoard = () => {
     try {
         display.innerHTML = `${Player1.name}'s turn`;
     }
@@ -195,11 +198,13 @@ const GameBoard = (Player1, Player2) => {
     const container = document.querySelector('.grid');
     removeAllNodes(container);
     for (let i = 0; i < 3; i++) {
+
         let gridRow = document.createElement('div');
         gridRow.classList.add('grid-row');
         for (let j = 0; j < 3; j++) {
             let gridItem = document.createElement('div');
             gridItem.classList.add('grid-item');
+            gridItem.innerHTML = gameArray[idx];
             gridItem.setAttribute('id', idListed[idx++]);
             gridRow.appendChild(gridItem);
         }
@@ -208,17 +213,22 @@ const GameBoard = (Player1, Player2) => {
 
     const buttons = document.querySelectorAll('.grid-item');
     // console.log(buttons);
-    
+
     buttons.forEach(button => button.addEventListener('click', (e) => {
+        // if(playerWin == true) {
+        //     GameBoard();
+        //     return;
+        // }
         let playerMove = e.target.id;
         console.log(playerMove);
         if (computerMove) {
             if (playerOneTurn) {
                 Player1.move(playerMove);
                 if (validMove) {
+                    GameBoard();
                     playerOneTurn = false;
                     display.innerHTML = `${Player2.name}'s turn`;
-                    const change = document.getElementById(this.id);
+                    const change = document.getElementById(e.target.id);
                     change.innerHTML = Player1.symbol;
                 }
             }
@@ -233,24 +243,26 @@ const GameBoard = (Player1, Player2) => {
                 }
 
                 Player2.move(playerMove);
+                GameBoard();
                 display.innerHTML = `${Player2.name}'s turn`;
                 playerOneTurn = true;
             }
-        }else {
-            if(playerOneTurn){
-                
+        }
+        else {
+            if (playerOneTurn) {
+
                 Player1.move(playerMove);
-                if(validMove){
-                    // GameBoard();
+                if (validMove) {
+                    GameBoard();
                     playerOneTurn = false;
                     display.innerHTML = `${Player2.name}'s turn`;
-                    const change= document.getElementById(e.target.id); 
+                    const change = document.getElementById(e.target.id);
                     change.innerHTML = Player1.symbol;
                 }
-            }else if(!playerOneTurn){
+            } else if (!playerOneTurn) {
                 Player2.move(playerMove);
-                if(validMove){
-                    // GameBoard();
+                if (validMove) {
+                    GameBoard();
                     playerOneTurn = true;
                     display.innerHTML = `${Player1.name}'s turn`;
                     const change = document.getElementById(e.target.id);
@@ -258,38 +270,42 @@ const GameBoard = (Player1, Player2) => {
                 }
             }
         }
-        moves++;
-
-        if(Player1.checkWin()) {
-            alert(`${Player1.name} wins, click on start to start again`);
-            GameBoard();
-        }
         
-        if(Player2.checkWin()) {
-            alert(`${Player2.name} wins, click on start to start again`);
-            GameBoard();
-        }
+        moves++;
+        Player1.checkWin();
 
-        if(moves == 9){
+        Player2.checkWin();
+        
+        if (moves == 9) {
             // tie     
             gameArray = ["", "", "", "", "", "", "", "", ""];
             winner = `This game was a tie`;
-            moves =0;
+            moves = 0;
             display.innerHTML = winner;
         }
-    }   
-    ))
+    }));
 }
+const aiButton = document.querySelector('#playWithComp');
+aiButton.addEventListener('click',(e) =>{
+    moves  = 0;
+    playerOneTurn = true;
+    let p1Name = prompt('Player 1 name?');
+    Player1 = Player(p1Name,"X");
 
+    Player2 = Player('Computer','O');
+    computerMove = true;
+    gameArray = ["", "", "", "", "", "", "", "", ""];
+    GameBoard();
+})
 const start = document.querySelector('#start');
 start.addEventListener('click', (e) => {
     moves = 0;
     playerOneTurn = true;
     let p1Name = prompt('Player 1 name ?');
-    let Player1 = Player(p1Name, "X");
+    Player1 = Player(p1Name, "X");
 
     let p2Name = prompt('Player 2 name ?');
-    let Player2 = Player(p2Name, "O");
+    Player2 = Player(p2Name, "O");
 
     computerMove = false;
     gameArray = ["", "", "", "", "", "", "", "", ""];
